@@ -4,8 +4,8 @@
   "scripts": {
     "start": "meteor run"
   },
-  "main": "server/main.js",
-  "browser": "client/main.js",
+  "main": "src/server.js",
+  "browser": "src/client.js",
   "dependencies": {
     "meteor-node-stubs": "~0.2.0",
     "react": "^15.0.0",
