@@ -8,8 +8,16 @@ Nodes.schema = new SimpleSchema({
     type: [String],
     regEx: SimpleSchema.RegEx.Id,
     optional: true,
-    label: 'array of link IDs'
+    label: 'array of link IDs, incoming'
+  },
+  parents: {
+    type: [String],
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true,
+    label: 'array of link IDs, outgoing'
   }
 });
+
+Nodes.attachSchema(Nodes.schema)
 
 export default Nodes
