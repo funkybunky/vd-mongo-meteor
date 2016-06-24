@@ -53,7 +53,7 @@ const data = [
 // have duplicate node data then. For one the stuff from the DB and the other
 // part in this raster mapping
 // All the logic is in this raster. Meaning, decide which node to show if there
-// are conflicting nodes at the same sport. Alogrithm defines it and stores
+// are conflicting nodes at the same spot. Alogrithm defines it and stores
 // that decision in the raster.
 const raster = (function () {
   // private
