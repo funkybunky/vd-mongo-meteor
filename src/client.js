@@ -117,29 +117,52 @@ class NodesMap extends Component {
     const raster = this.props.raster
     console.log('keys: ', raster.keys())
     // Iterate through raster and render a node
-    return (
-      <div style={{position: 'relative'}}>
-        {/* We use reduce here, because there are.. hm.. no.  */}
-        {raster.keys().map((position) => {
-          const nodeId = raster.get(position.x, position.y)
-          const node = getNodeById(nodeId)
-          return <NodeItem key={nodeId} currentNode={node} x={position.x} y={position.y} />
-        })}
-      </div>
-    )
+    if (this.props.loading === true) {
+      return (
+        <div>Loading...</div>
+      )
+    } else {
+      return (
+        <div style={{position: 'relative'}}>
+          {/* We use reduce here, because there are.. hm.. no.  */}
+          {raster.keys().map((position) => {
+            const nodeId = raster.get(position.x, position.y)
+            const node = getNodeById(nodeId)
+            return <NodeItem key={nodeId} currentNode={node} x={position.x} y={position.y} />
+          })}
+        </div>
+      )
+    }
+    // return (
+    //   {this.props.loading ?
+    //     <div>Loading...</div>
+    //     :
+    //     <div style={{position: 'relative'}}>
+    //       {/* We use reduce here, because there are.. hm.. no.  */}
+    //       {raster.keys().map((position) => {
+    //         const nodeId = raster.get(position.x, position.y)
+    //         const node = getNodeById(nodeId)
+    //         return <NodeItem key={nodeId} currentNode={node} x={position.x} y={position.y} />
+    //       })}
+    //     </div>
+    //   }
+    // )
   }
 }
 
 const NodesContainer = createContainer((params) => {
-  const nodesHandle = Meteor.subscribe('allNodes') // Don't need this yet
-  // with insecure turned on
+  const createRaster = (nodes) => {
+    return params.raster
+  }
+  const nodesHandle = Meteor.subscribe('allNodes')
   const loading = !nodesHandle.ready()
-  const nodes = Nodes.find({})
+  const nodes = Nodes.find({}).fetch()
   const raster = createRaster(nodes)
+  debugger
   return {
     loading,
     raster,
   }
 }, NodesMap)
 
-ReactDOM.render(<NodesMap raster={raster} />, document.getElementById('root'))
+ReactDOM.render(<NodesContainer raster={raster} />, document.getElementById('root'))
