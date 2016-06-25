@@ -2,10 +2,11 @@
 
 import { ReactiveVar } from 'meteor/reactive-var';
 
-// import './main.html';
-
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+
+import Nodes from 'VD/collections/Nodes.collection.both.js'
+import { createContainer } from 'meteor/react-meteor-data'
 
 const data = [
   {
@@ -128,5 +129,17 @@ class NodesMap extends Component {
     )
   }
 }
+
+const NodesContainer = createContainer((params) => {
+  const nodesHandle = Meteor.subscribe('allNodes') // Don't need this yet
+  // with insecure turned on
+  const loading = !nodesHandle.ready()
+  const nodes = Nodes.find({})
+  const raster = createRaster(nodes)
+  return {
+    loading,
+    raster,
+  }
+}, NodesMap)
 
 ReactDOM.render(<NodesMap raster={raster} />, document.getElementById('root'))
