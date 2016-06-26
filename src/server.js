@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 
+import 'VD/server/index.js'
+
 import Nodes from 'VD/collections/Nodes.collection.both.js'
 
 Meteor.startup(() => {

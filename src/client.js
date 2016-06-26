@@ -117,26 +117,12 @@ class NodesMap extends Component {
     const raster = this.props.raster
     console.log('keys: ', raster.keys())
     // Iterate through raster and render a node
-    if (this.props.loading === true) {
-      return (
-        <div>Loading...</div>
-      )
-    } else {
-      return (
-        <div style={{position: 'relative'}}>
-          {/* We use reduce here, because there are.. hm.. no.  */}
-          {raster.keys().map((position) => {
-            const nodeId = raster.get(position.x, position.y)
-            const node = getNodeById(nodeId)
-            return <NodeItem key={nodeId} currentNode={node} x={position.x} y={position.y} />
-          })}
-        </div>
-      )
-    }
-    // return (
-    //   {this.props.loading ?
+    // if (this.props.loading === true) {
+    //   return (
     //     <div>Loading...</div>
-    //     :
+    //   )
+    // } else {
+    //   return (
     //     <div style={{position: 'relative'}}>
     //       {/* We use reduce here, because there are.. hm.. no.  */}
     //       {raster.keys().map((position) => {
@@ -145,8 +131,21 @@ class NodesMap extends Component {
     //         return <NodeItem key={nodeId} currentNode={node} x={position.x} y={position.y} />
     //       })}
     //     </div>
-    //   }
-    // )
+    //   )
+    // }
+    return (
+      this.props.loading ?
+        <div>Loading...</div>
+        :
+        <div style={{position: 'relative'}}>
+          {/* We use reduce here, because there are.. hm.. no.  */}
+          {raster.keys().map((position) => {
+            const nodeId = raster.get(position.x, position.y)
+            const node = getNodeById(nodeId)
+            return <NodeItem key={nodeId} currentNode={node} x={position.x} y={position.y} />
+          })}
+        </div>
+    )
   }
 }
 
@@ -154,7 +153,14 @@ const NodesContainer = createContainer((params) => {
   const createRaster = (nodes) => {
     return params.raster
   }
-  const nodesHandle = Meteor.subscribe('allNodes')
+  const nodesHandle = Meteor.subscribe('allNodes', {
+    onReady: (...squat) => {
+      console.log('ready! args: ', ...squat)
+    },
+    onStop: (...whuut) => {
+      console.log('errorz, stopped: ', ...whuut)
+    }
+  })
   const loading = !nodesHandle.ready()
   const nodes = Nodes.find({}).fetch()
   const raster = createRaster(nodes)
