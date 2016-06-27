@@ -15,7 +15,6 @@ export default (nodes, links, raster) => {
         console.log('root: ', node.title)
       }
     })
-    debugger
     return rootId
   }
 
@@ -25,7 +24,6 @@ export default (nodes, links, raster) => {
     links.forEach((link) => {
       if (link.to === parentId) children.push(link._id)
     })
-    debugger
     return children
   }
 
@@ -39,14 +37,14 @@ export default (nodes, links, raster) => {
 
     let lastY = 0 // The space the grandchildren of the last child have taken
 
-    for (let i = 0; i < childrenIds.length - 1; i++ ) {
+    for (let i = 0; i < childrenIds.length; i++ ) {
       const childId = childrenIds[i]
       raster.set(childX, parentPos.y + i + lastY, childId)
       // TODO: check here if the child that just got set has itself children
       // and set those first, that function returns the amount of space (y)
       // that was needed by all the grandchildrne of that node so that the
       // other children can be pushed down/ continue that amount farther down
-      const grandChildrenIds = findChildren(childId)
+      const grandChildrenIds = findChildren(childId, links)
       if (grandChildrenIds.length > 0) {
         lastY = placeChildren(childId, grandChildrenIds)
       }
