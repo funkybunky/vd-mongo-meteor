@@ -47,8 +47,8 @@ export default (nodes, links, raster) => {
       }
 
     }
-    console.log('returning: ', parentPos.y + childrenIds.length - 1)
-    return parentPos.y + childrenIds.length - 1
+    console.log('returning: ', parentPos.y + childrenIds.length)
+    return parentPos.y + childrenIds.length
   }
 
   // find root node
