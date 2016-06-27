@@ -69,9 +69,13 @@ const raster = (function () {
     store[serialize(x, y)] = id
     return true
   }
-  function get(x, y) {
+  function getNodeByPos(x, y) {
     return store[serialize(x, y)]
   }
+  // TODO: add check in set() to see if there's already a node at this pos
+  // add another func or a param flag to force a write anyway
+
+  // Just outputs all node positions in an array
   function keys() {
     return Object.keys(store).map((keyStr) => {
         const strArray = keyStr.split('x') // gives ['12', '42']
@@ -79,31 +83,47 @@ const raster = (function () {
     })
   }
 
+  // Outputs array of objects with x and y pos and the ID of the node that's
+  // on that position
+  function fetchAll() {
+    return Object.keys(store).map((keyStr) => {
+        const strArray = keyStr.split('x') // gives ['12', '42']
+        const x = parseInt(strArray[0], 10)
+        const y = parseInt(strArray[1], 10)
+
+        return {
+          x,
+          y,
+          id: getNodeByPos(x, y)
+        }
+    })
+  }
+
+  function getNodePos(id) {
+    let pos = {}
+    for (let data of fetchAll()) {
+      if (data.id === id) {
+        pos.x = data.x
+        pos.y = data.y
+      }
+    }
+    return pos
+  }
+
   return {
     set,
-    get,
-    keys
+    get: getNodeByPos,
+    keys,
+    fetchAll,
+    getNodePos,
+    getNodeById: getNodePos,
   }
 }())
-
-raster.set(1,1,0)
-raster.set(2,1,1)
-
-const getNodeById = (id) => {
-  //debugger
-  let nodeById
-  data.forEach((node) => {
-    if (node.id === id) {
-      nodeById = node
-    }
-  })
-  return nodeById
-  throw new Error('No node found! Halp! ID: ', id)
-}
 
 // Just takes x and y and renders a node at that given position
 class NodeItem extends Component {
   render () {
+    console.log('props to NodeItem: ',)
     return (
       <div style={{position: 'absolute', top: (this.props.y * 40), left: (this.props.x * 40), display: 'inline-block'}}>
         <span>{this.props.currentNode.title}</span>
@@ -117,6 +137,13 @@ class NodesMap extends Component {
   render () {
     const raster = this.props.raster
     console.log('keys: ', raster.keys())
+
+    const getNodeById = (id) => {
+      return this.props.nodes.reduce((wantedNode, node) => {
+        if (node._id === id) return node
+        return wantedNode
+      })
+    }
     // Iterate through raster and render a node
     // if (this.props.loading === true) {
     //   return (
@@ -151,10 +178,75 @@ class NodesMap extends Component {
 }
 
 const NodesContainer = createContainer((params) => {
+  console.log('params: ', params)
+  const raster = params.raster
+
   const createRaster = (nodes, links) => {
     console.log('da nodes: ', JSON.stringify(nodes, null, 2))
     console.log('links: ', JSON.stringify(links, null, 2))
-    return params.raster
+
+    const findRoot = () => {
+      // the root node is the one whose ID is in no link `from` field
+      let rootId
+      nodes.forEach((node) => {
+        let isRoot = true
+        links.forEach((link) => {
+          if (link.from === node.Id) isRoot = false
+        })
+        if (isRoot === true) rootId = node._id
+      })
+      return rootId
+    }
+
+    // Returns children IDs
+    const findChildren = (parentId) => {
+      let children = []
+      links.forEach((link) => {
+        if (link.to === parentId) children.push(link._id)
+      })
+      return children
+    }
+
+    // Places an array of children IDs in the raster
+    // returns the last y-position
+    // TODO: make this function pure by passing in the raster and returning it
+    const placeChildren = (parentId, childrenIds) => {
+      const parentPos = raster.getNodePos(parentId)
+      const childX = parentPos.x + 1
+
+      let lastY = 0 // The space the grandchildren of the last child have taken
+
+      for (let i = 0; i < childrenIds.length - 1; i++ ) {
+        const childId = childrenIds[i]
+        raster.set(childX, parentPos.y + i + lastY, childId)
+        // TODO: check here if the child that just got set has itself children
+        // and set those first, that function returns the amount of space (y)
+        // that was needed by all the grandchildrne of that node so that the
+        // other children can be pushed down/ continue that amount farther down
+        const grandChildrenIds = findChildren(childId)
+        if (childrenIds.length > 0) {
+          lastY = placeChildren(childId, grandChildrenIds)
+        }
+
+      }
+      return parentPos.y + childrenIds.length - 1
+    }
+
+    // find root node
+    const rootId = findRoot()
+
+    // place it in first pos: 0,0
+    raster.set(0, 0, rootId)
+
+    // find children: search through links, find those that link to that node
+    const childrenIds = findChildren(rootId)
+
+    // place children: x + 1, same y is the first child, others increase in y
+    placeChildren(rootId, childrenIds)
+
+    // find children of first child, iterate
+    // already done in placeChildren()
+
   }
   const nodesHandle = Meteor.subscribe('allNodes', {
     onReady: (...squat) => {
@@ -176,11 +268,13 @@ const NodesContainer = createContainer((params) => {
   const nodes = Nodes.find({}).fetch()
   const links = Links.find({}).fetch()
 
-  const raster = createRaster(nodes, links)
+  // const raster = createRaster(nodes, links)
+  createRaster(nodes, links)
 
   return {
     loading,
     raster,
+    nodes,
   }
 }, NodesMap)
 
