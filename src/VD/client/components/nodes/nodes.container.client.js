@@ -1,3 +1,5 @@
+import { createContainer } from 'meteor/react-meteor-data'
+
 import Nodes from 'VD/collections/Nodes.collection.both.js'
 import Links from 'VD/collections/Links.collection.both.js'
 

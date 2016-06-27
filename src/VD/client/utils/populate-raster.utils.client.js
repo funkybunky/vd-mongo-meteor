@@ -29,6 +29,7 @@ export default populateRaster = (nodes, links, raster) => {
   // TODO: make this function pure by passing in the raster and returning it
   const placeChildren = (parentId, childrenIds) => {
     const parentPos = raster.getNodePos(parentId)
+    console.log('parentPos: ', parentPos)
     const childX = parentPos.x + 1
 
     let lastY = 0 // The space the grandchildren of the last child have taken
@@ -46,6 +47,7 @@ export default populateRaster = (nodes, links, raster) => {
       }
 
     }
+    console.log('returning: ', parentPos.y + childrenIds.length - 1)
     return parentPos.y + childrenIds.length - 1
   }
 

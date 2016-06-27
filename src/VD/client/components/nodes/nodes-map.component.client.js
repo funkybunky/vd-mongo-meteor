@@ -1,3 +1,5 @@
+import React, { Component } from 'react'
+
 import NodeItem from './node-item.component.client.js'
 
 // Takes raster

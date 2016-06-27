@@ -1,3 +1,5 @@
+import React, { Component } from 'react'
+
 // Just takes x and y and renders a node at that given position
 export default class NodeItem extends Component {
   render () {
