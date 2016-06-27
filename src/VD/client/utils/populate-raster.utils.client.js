@@ -8,9 +8,12 @@ export default (nodes, links, raster) => {
     nodes.forEach((node) => {
       let isRoot = true
       links.forEach((link) => {
-        if (link.from === node.Id) isRoot = false
+        if (link.from === node._id) isRoot = false
       })
-      if (isRoot === true) rootId = node._id
+      if (isRoot === true) {
+        rootId = node._id
+        console.log('root: ', node.title)
+      }
     })
     debugger
     return rootId
