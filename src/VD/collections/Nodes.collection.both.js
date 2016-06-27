@@ -3,7 +3,12 @@ import { Mongo } from 'meteor/mongo'
 const Nodes = new Mongo.Collection('nodes')
 
 Nodes.schema = new SimpleSchema({
-  title: {type: String},
+  title: {
+    type: String,
+  },
+  type: {
+    type: String,
+  },
   children: {
     type: [String],
     regEx: SimpleSchema.RegEx.Id,
