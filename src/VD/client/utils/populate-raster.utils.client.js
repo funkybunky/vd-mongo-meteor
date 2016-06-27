@@ -1,6 +1,6 @@
 export default (nodes, links, raster) => {
-  console.log('da nodes: ', JSON.stringify(nodes, null, 2))
-  console.log('links: ', JSON.stringify(links, null, 2))
+  // console.log('da nodes: ', JSON.stringify(nodes, null, 2))
+  // console.log('links: ', JSON.stringify(links, null, 2))
 
   const findRoot = () => {
     // the root node is the one whose ID is in no link `from` field
@@ -42,7 +42,7 @@ export default (nodes, links, raster) => {
       // that was needed by all the grandchildrne of that node so that the
       // other children can be pushed down/ continue that amount farther down
       const grandChildrenIds = findChildren(childId)
-      if (childrenIds.length > 0) {
+      if (grandChildrenIds.length > 0) {
         lastY = placeChildren(childId, grandChildrenIds)
       }
 
