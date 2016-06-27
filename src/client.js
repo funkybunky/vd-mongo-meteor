@@ -164,7 +164,6 @@ const NodesContainer = createContainer((params) => {
   const loading = !nodesHandle.ready()
   const nodes = Nodes.find({}).fetch()
   const raster = createRaster(nodes)
-  debugger
   return {
     loading,
     raster,
