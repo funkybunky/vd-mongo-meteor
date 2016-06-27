@@ -151,8 +151,9 @@ class NodesMap extends Component {
 }
 
 const NodesContainer = createContainer((params) => {
-  const createRaster = (nodes) => {
-    // console.log('da nodes: ', JSON.stringify(nodes, null, 2))
+  const createRaster = (nodes, links) => {
+    console.log('da nodes: ', JSON.stringify(nodes, null, 2))
+    console.log('links: ', JSON.stringify(links, null, 2))
     return params.raster
   }
   const nodesHandle = Meteor.subscribe('allNodes', {
@@ -163,10 +164,20 @@ const NodesContainer = createContainer((params) => {
       console.log('errorz, stopped: ', ...whuut)
     }
   })
-  const loading = !nodesHandle.ready()
+  const linksHandle = Meteor.subscribe('allLinks', {
+    onReady: (...squat) => {
+      console.log('ready! args: ', ...squat)
+    },
+    onStop: (...whuut) => {
+      console.log('errorz, stopped: ', ...whuut)
+    }
+  })
+  const loading = !nodesHandle.ready() || !linksHandle.ready()
   const nodes = Nodes.find({}).fetch()
-  // const links = Links.find({}).fetch()
-  const raster = createRaster(nodes)
+  const links = Links.find({}).fetch()
+
+  const raster = createRaster(nodes, links)
+
   return {
     loading,
     raster,
