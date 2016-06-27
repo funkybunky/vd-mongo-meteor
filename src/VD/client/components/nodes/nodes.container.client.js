@@ -35,7 +35,7 @@ export default createContainer((params) => {
 
   return {
     loading,
-    populatedRaster,
+    raster: populatedRaster,
     nodes,
   }
 }, NodesMap)
