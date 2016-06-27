@@ -22,7 +22,7 @@ export default (nodes, links, raster) => {
   const findChildren = (parentId, links) => {
     let children = []
     links.forEach((link) => {
-      if (link.to === parentId) children.push(link._id)
+      if (link.to === parentId) children.push(link.from)
     })
     return children
   }
@@ -48,9 +48,8 @@ export default (nodes, links, raster) => {
       if (grandChildrenIds.length > 0) {
         lastY = placeChildren(childId, grandChildrenIds)
       }
-      debugger
-
     }
+
     console.log('returning: ', parentPos.y + childrenIds.length)
     return parentPos.y + childrenIds.length
   }
@@ -69,7 +68,6 @@ export default (nodes, links, raster) => {
 
   // find children of first child, iterate
   // already done in placeChildren()
-  debugger
 
   return raster
 }
