@@ -1,4 +1,4 @@
-export default populateRaster = (nodes, links, raster) => {
+export default (nodes, links, raster) => {
   console.log('da nodes: ', JSON.stringify(nodes, null, 2))
   console.log('links: ', JSON.stringify(links, null, 2))
 
