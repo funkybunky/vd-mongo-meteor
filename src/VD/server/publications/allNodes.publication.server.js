@@ -5,6 +5,6 @@ Meteor.publish('allNodes', function() {
   return Nodes.find({})
 })
 
-Meteor.publish('allNodes', function() {
+Meteor.publish('allLinks', function() {
   return Links.find({})
 })
