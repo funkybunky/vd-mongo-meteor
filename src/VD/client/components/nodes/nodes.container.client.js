@@ -31,7 +31,10 @@ export default createContainer((params) => {
   const nodes = Nodes.find({}).fetch()
   const links = Links.find({}).fetch()
 
-  const populatedRaster = populateRaster(nodes, links, raster)
+  let populatedRaster
+  if (!loading) {
+    populatedRaster = populateRaster(nodes, links, raster)
+  }
 
   return {
     loading,

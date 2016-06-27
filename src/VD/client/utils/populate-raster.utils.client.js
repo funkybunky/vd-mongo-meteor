@@ -2,7 +2,7 @@ export default (nodes, links, raster) => {
   // console.log('da nodes: ', JSON.stringify(nodes, null, 2))
   // console.log('links: ', JSON.stringify(links, null, 2))
 
-  const findRoot = () => {
+  const findRoot = (nodes, links) => {
     // the root node is the one whose ID is in no link `from` field
     let rootId
     nodes.forEach((node) => {
@@ -12,15 +12,17 @@ export default (nodes, links, raster) => {
       })
       if (isRoot === true) rootId = node._id
     })
+    debugger
     return rootId
   }
 
   // Returns children IDs
-  const findChildren = (parentId) => {
+  const findChildren = (parentId, links) => {
     let children = []
     links.forEach((link) => {
       if (link.to === parentId) children.push(link._id)
     })
+    debugger
     return children
   }
 
@@ -45,6 +47,7 @@ export default (nodes, links, raster) => {
       if (grandChildrenIds.length > 0) {
         lastY = placeChildren(childId, grandChildrenIds)
       }
+      debugger
 
     }
     console.log('returning: ', parentPos.y + childrenIds.length)
@@ -52,19 +55,20 @@ export default (nodes, links, raster) => {
   }
 
   // find root node
-  const rootId = findRoot()
+  const rootId = findRoot(nodes, links)
 
   // place it in first pos: 0,0
   raster.set(0, 0, rootId)
 
   // find children: search through links, find those that link to that node
-  const childrenIds = findChildren(rootId)
+  const childrenIds = findChildren(rootId, links)
 
   // place children: x + 1, same y is the first child, others increase in y
   placeChildren(rootId, childrenIds)
 
   // find children of first child, iterate
   // already done in placeChildren()
+  debugger
 
   return raster
 }
