@@ -26,7 +26,15 @@ Meteor.startup(() => {
   }
 
   // if (Nodes.find({}).count() === 0) {
-    const createNodeHierachy = (levelsLeft = 1, parentId) => {
+    const createNodeHierachy = (levelsLeft = 1, parentId, parentType) => {
+
+      // TODO: implement this later to dynaimcally produce correct relationships
+      parentType = parentType || null
+      childType = parentType
+
+      if (levelsLeft < 1) {
+        return true
+      }
 
       const names = [
         'Jack',
@@ -56,11 +64,11 @@ Meteor.startup(() => {
         to: parentId,
         type: 'answers',
       })
-      return createNodeHierachy(levelsLeft - 1, childId)
+      return createNodeHierachy(levelsLeft - 1, childId, childType)
     }
 
-    killDb()
-    createNodeHierachy(5)
+    // killDb()
+    // createNodeHierachy(5)
 
   // }
 });

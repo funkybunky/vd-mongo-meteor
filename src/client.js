@@ -6,6 +6,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
 import Nodes from 'VD/collections/Nodes.collection.both.js'
+import Links from 'VD/collections/Links.collection.both.js'
 import { createContainer } from 'meteor/react-meteor-data'
 
 const data = [
@@ -151,6 +152,7 @@ class NodesMap extends Component {
 
 const NodesContainer = createContainer((params) => {
   const createRaster = (nodes) => {
+    // console.log('da nodes: ', JSON.stringify(nodes, null, 2))
     return params.raster
   }
   const nodesHandle = Meteor.subscribe('allNodes', {
@@ -163,6 +165,7 @@ const NodesContainer = createContainer((params) => {
   })
   const loading = !nodesHandle.ready()
   const nodes = Nodes.find({}).fetch()
+  // const links = Links.find({}).fetch()
   const raster = createRaster(nodes)
   return {
     loading,
