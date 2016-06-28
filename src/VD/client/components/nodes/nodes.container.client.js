@@ -36,8 +36,13 @@ export default createContainer((params) => {
     populatedRaster = populateRaster(nodes, links, raster)
   }
 
-  const handleNewNode = (event) => {
-    event.preventDefault()
+  const handleNewNode = (data) => {
+    const payload = {
+      title: 'new node',
+      parentId: data.parentId,
+      type: 'idea',
+      linkType: 'answers',
+    }
     Meteor.call('createNode', payload, (err, res) => {
       if (err) console.log('createNode error! ', err)
       // if (res)

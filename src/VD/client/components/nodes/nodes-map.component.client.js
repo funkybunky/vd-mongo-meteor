@@ -26,7 +26,12 @@ export default class NodesMap extends Component {
           {raster.keys().map((position) => {
             const nodeId = raster.get(position.x, position.y)
             const node = getNodeById(nodeId)
-            return <NodeItem key={nodeId} currentNode={node} x={position.x} y={position.y} />
+            return <NodeItem
+              key={nodeId}
+              currentNode={node}
+              x={position.x}
+              y={position.y}
+              handleNewNode={this.props.handleNewNode} />
           })}
         </div>
       )
