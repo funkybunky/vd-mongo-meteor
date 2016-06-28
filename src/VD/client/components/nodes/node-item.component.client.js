@@ -13,7 +13,7 @@ export default class NodeItem extends Component {
     this.props.handleNewNode(payload)
   }
   render () {
-    console.log('props to NodeItem: ',)
+    // console.log('props to NodeItem: ',)
     return (
       <div
         style={

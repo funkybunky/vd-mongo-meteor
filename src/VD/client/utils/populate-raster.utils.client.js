@@ -12,7 +12,7 @@ export default (nodes, links, raster) => {
       })
       if (isRoot === true) {
         rootId = node._id
-        console.log('root: ', node.title)
+        // console.log('root: ', node.title)
       }
     })
     return rootId
@@ -32,14 +32,14 @@ export default (nodes, links, raster) => {
   // TODO: make this function pure by passing in the raster and returning it
   const placeChildren = (parentId, childrenIds) => {
     const parentPos = raster.getNodePos(parentId)
-    console.log('parentPos: ', parentPos)
+    // console.log('parentPos: ', parentPos)
     const childX = parentPos.x + 1
 
     let lastY = 0 // The space the grandchildren of the last child have taken
 
     for (let i = 0; i < childrenIds.length; i++ ) {
       const childId = childrenIds[i]
-      console.log('lastY: ', lastY)
+      // console.log('lastY: ', lastY)
       // raster.set(childX, parentPos.y + i + lastY, childId)
       raster.set(childX, parentPos.y + i, childId)
       // TODO: check here if the child that just got set has itself children
@@ -52,7 +52,7 @@ export default (nodes, links, raster) => {
       }
     }
 
-    console.log('returning: ', parentPos.y + childrenIds.length)
+    // console.log('returning: ', parentPos.y + childrenIds.length)
     return parentPos.y + childrenIds.length
   }
 

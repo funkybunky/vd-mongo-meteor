@@ -42,7 +42,7 @@ export default createContainer((params) => {
       parentId: String,
       type: String,
       linkType: String,
-    })    
+    })
     Meteor.call('createNode', payload, (err, res) => {
       if (err) console.log('createNode error! ', err)
       // if (res)
@@ -59,6 +59,7 @@ export default createContainer((params) => {
     loading,
     raster: populatedRaster,
     nodes,
+    links,
     handleNewNode,
   }
 }, NodesMap)
