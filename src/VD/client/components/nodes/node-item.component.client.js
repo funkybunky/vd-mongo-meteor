@@ -16,11 +16,18 @@ export default class NodeItem extends Component {
     console.log('props to NodeItem: ',)
     return (
       <div
-        style={{
+        style={
+        {
           position: 'absolute',
           top: (this.props.y * 50),
-          left: (this.props.x * 100),
-          display: 'inline-block'}}
+          left: (this.props.x * 110),
+          display: 'inline-block',
+          backgroundColor: '#888',
+          color: '#ddd',
+          width: '90px',
+          height: '40px',
+        }
+        }
         onClick={this.handleNodeClick}
       >
         <span>{this.props.currentNode.title}</span>
