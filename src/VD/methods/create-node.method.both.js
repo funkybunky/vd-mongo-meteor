@@ -3,7 +3,6 @@ import Links from '../collections/Links.collection.both.js'
 
 Meteor.methods({
   createNode: function(payload) {
-    try {
 
     check(payload, {
       title: String,
@@ -28,8 +27,5 @@ Meteor.methods({
       to: parentId,
     })
 
-  } catch(e) {
-    console.log('method create node fail: ', e)
-  }
   }
 })

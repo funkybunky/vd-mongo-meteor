@@ -6,6 +6,9 @@ export default class NodeItem extends Component {
     event.preventDefault()
     const payload = {
       parentId: this.props.currentNode._id,
+      title: this.props.currentNode.title + 'son',
+      type: 'idea',
+      linkType: 'answers',
     }
     this.props.handleNewNode(payload)
   }
