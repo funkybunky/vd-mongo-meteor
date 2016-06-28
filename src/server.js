@@ -30,7 +30,7 @@ Meteor.startup(() => {
 
       // TODO: implement this later to dynaimcally produce correct relationships
       parentType = parentType || null
-      childType = parentType
+      const childType = parentType
 
       if (levelsLeft < 1) {
         return true
