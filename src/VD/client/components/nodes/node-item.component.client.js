@@ -19,7 +19,7 @@ export default class NodeItem extends Component {
         style={{
           position: 'absolute',
           top: (this.props.y * 50),
-          left: (this.props.x * 70),
+          left: (this.props.x * 100),
           display: 'inline-block'}}
         onClick={this.handleNodeClick}
       >

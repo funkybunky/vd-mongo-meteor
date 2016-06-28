@@ -8,17 +8,23 @@
 export default (function () {
   // private
   const store = {}
+  const visibility = {} // maps node ID to true/false
   function serialize(x, y) {
     return x.toString() + 'x' + y.toString()
   }
 
   // public
-  function set(x, y, id) {
-    store[serialize(x, y)] = id
-    return true
-  }
   function getNodeByPos(x, y) {
     return store[serialize(x, y)]
+  }
+  function set(x, y, id) {
+    if (getNodeByPos(x, y)) {
+      // If there already is a node, we log for now
+      console.log('already a node at this place, overwriting..')
+      // throw new Error('already a node at this place!')
+    }
+    store[serialize(x, y)] = id
+    return true
   }
   // TODO: add check in set() to see if there's already a node at this pos
   // add another func or a param flag to force a write anyway

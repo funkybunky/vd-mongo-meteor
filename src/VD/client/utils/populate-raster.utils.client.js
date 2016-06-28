@@ -39,7 +39,9 @@ export default (nodes, links, raster) => {
 
     for (let i = 0; i < childrenIds.length; i++ ) {
       const childId = childrenIds[i]
-      raster.set(childX, parentPos.y + i + lastY, childId)
+      console.log('lastY: ', lastY)
+      // raster.set(childX, parentPos.y + i + lastY, childId)
+      raster.set(childX, parentPos.y + i, childId)
       // TODO: check here if the child that just got set has itself children
       // and set those first, that function returns the amount of space (y)
       // that was needed by all the grandchildrne of that node so that the
