@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 
 import NodeItem from './node-item.component.client.js'
+import NodeBorder from './node-border.component.client.js'
 
 // Takes raster
 export default class NodesMap extends Component {
@@ -44,9 +45,13 @@ export default class NodesMap extends Component {
       { x: x, y: maxY }
     ]
 
-    debugger
-
     return result
+  }
+
+  drawBorder = (borderPos) => {
+    const nodesWidth = 110
+    const nodesHeight = 50
+
   }
 
   render () {
@@ -72,6 +77,7 @@ export default class NodesMap extends Component {
 
       return (
         <div style={{position: 'relative'}}>
+          <NodeBorder border={border} />
           {raster.keys().map((position) => {
             const nodeId = raster.get(position.x, position.y)
             const node = getNodeById(nodeId)
