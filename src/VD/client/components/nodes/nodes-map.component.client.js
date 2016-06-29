@@ -91,11 +91,18 @@ export default class NodesMap extends Component {
         })
       }
 
+      const drawBorders = () => {
+        return borders.map((border) => {
+          return <NodeBorder key={JSON.stringify(border)} border={border} />
+        })
+      }
+
+      // debugger
+
       return (
         <div style={{position: 'relative'}}>
-          {borders.map((border) => {
-            <NodeBorder border={border} />
-          })}
+
+          {drawBorders()}
 
           {raster.keys().map((position) => {
             const nodeId = raster.get(position.x, position.y)

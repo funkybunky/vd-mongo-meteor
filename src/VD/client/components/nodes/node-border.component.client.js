@@ -4,6 +4,7 @@ export default class NodeBorder extends React.Component {
   render() {
     const start = this.props.border[0]
     const end = this.props.border[1]
+    // debugger
     // const NODES_WIDTH = this.props.NODES_WIDTH
     // const NODES_HEIGHT = this.props.NODES_HEIGHT
     return (
