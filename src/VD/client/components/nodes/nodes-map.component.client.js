@@ -6,6 +6,7 @@ import _ from 'lodash' // not found by flow, because node_modules is ignored
 
 import NodeItem from './node-item.component.client.js'
 import NodeBorder from './node-border.component.client.js'
+import NodeConnector from './node-connector.component.client.jsx'
 
 type MinMaxPos = [
   { x: Number, y: Number}
@@ -62,6 +63,15 @@ export default class NodesMap extends Component {
     }))
   }
 
+  getFirstChildren (raster: Object, nodes: Array<Object>, links: Array<Object>): Array<String> {
+    return _.compact(nodes.map((node) => {
+      const childrenIds = this.getChildrenIds(node._id, nodes, links)
+      if (childrenIds.length > 0) {
+        return childrenIds[0]
+      }
+    }))
+  }
+
   render () {
     if (this.props.loading) {
       return (
@@ -85,10 +95,22 @@ export default class NodesMap extends Component {
         })
       }
 
+      const drawParentChildConnectors = () => {
+        // const bla = this.getFirstChildren()
+        // debugger
+        return this.getFirstChildren(raster, nodes, links).map((childId) => {
+          const pos = raster.getNodePos(childId)
+          return <NodeConnector key={childId} x={pos.x} y={pos.y} />
+        })
+      }
+      // const firstChildren = this.getFirstChildren(raster, nodes, links)
+
       return (
         <div style={{position: 'relative'}}>
 
           {drawBorders()}
+
+          {drawParentChildConnectors()}
 
           {raster.keys().map((position) => {
             const nodeId = raster.get(position.x, position.y)
@@ -98,6 +120,7 @@ export default class NodesMap extends Component {
               currentNode={node}
               x={position.x}
               y={position.y}
+              //isFirstChild={firstChildren.includes(nodeId)}
               handleNewNode={this.props.handleNewNode} />
           })}
         </div>
