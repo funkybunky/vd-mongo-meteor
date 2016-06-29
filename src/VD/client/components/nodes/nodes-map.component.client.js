@@ -56,12 +56,6 @@ export default class NodesMap extends Component {
     return result
   }
 
-  // drawBorder = (borderPos) => {
-  //   const nodesWidth = 110
-  //   const nodesHeight = 50
-  //
-  // }
-
   getBorders (raster: Object, nodes: Array<Object>, links: Array<Object>): Array<MinMaxPos> {
     return _.compact(nodes.map((node) => {
       return this.getBorderPos(node._id, raster, nodes, links)
