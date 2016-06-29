@@ -1,22 +1,30 @@
+'use strict'
+
 import React, { Component } from 'react'
-import _ from 'lodash'
+import _ from 'lodash' // not found by flow, because node_modules is ignored
+/* @flow */
 
 import NodeItem from './node-item.component.client.js'
 import NodeBorder from './node-border.component.client.js'
 
+type MinMaxPos = [
+  { x: Number, y: Number}
+]
+type Node = Object // TODO: declare it correclty in own file `types.js`
+type Link = Object
+
 // Takes raster
 export default class NodesMap extends Component {
-  getChildrenIds = (parentId: String, nodes, links) => {
+  getChildrenIds (parentId: String, nodes: Array<Node>, links:Array<Link>): Array<String> {
     let childrenIds = []
     links.forEach((link) => {
       if (link.to === parentId) {
         childrenIds.push(link.from)
       }
     })
-    debugger
     return childrenIds
   }
-  getBorderPos = (parentId: String, raster, nodes, links) => {
+  getBorderPos (parentId: String, raster: Object, nodes: Array<Node>, links: Array<Link>): MinMaxPos {
     const childrenIds = this.getChildrenIds(parentId, nodes, links)
     if (childrenIds.length === 0) {
       console.log('no children')
@@ -48,10 +56,16 @@ export default class NodesMap extends Component {
     return result
   }
 
-  drawBorder = (borderPos) => {
-    const nodesWidth = 110
-    const nodesHeight = 50
+  // drawBorder = (borderPos) => {
+  //   const nodesWidth = 110
+  //   const nodesHeight = 50
+  //
+  // }
 
+  getBorders (raster: Object, nodes: Array<Object>, links: Array<Object>): Array<MinMaxPos> {
+    return _.compact(nodes.map((node) => {
+      return this.getBorderPos(node._id, raster, nodes, links)
+    }))
   }
 
   render () {
@@ -60,16 +74,18 @@ export default class NodesMap extends Component {
         <div>Loading...</div>
       )
     } else {
-      const raster = this.props.raster
+      const { raster, nodes, links } = this.props
       // console.log('keys: ', raster.keys())
 
-      const testNode = this.props.nodes[2]
-      console.log('checking node ', testNode.title)
-      const border = this.getBorderPos(testNode._id, raster, this.props.nodes, this.props.links)
-      console.log('border. ', border)
+      // const testNode = this.props.nodes[2]
+      // console.log('checking node ', testNode.title)
+      // const border = this.getBorderPos(testNode._id, raster, this.props.nodes, this.props.links)
+      // console.log('border. ', border)
+
+      const borders = this.getBorders(raster, nodes, links)
 
       const getNodeById = (id) => {
-        return this.props.nodes.reduce((wantedNode, node) => {
+        return nodes.reduce((wantedNode, node) => {
           if (node._id === id) return node
           return wantedNode
         })
@@ -77,7 +93,10 @@ export default class NodesMap extends Component {
 
       return (
         <div style={{position: 'relative'}}>
-          <NodeBorder border={border} />
+          {borders.map((border) => {
+            <NodeBorder border={border} />
+          })}
+
           {raster.keys().map((position) => {
             const nodeId = raster.get(position.x, position.y)
             const node = getNodeById(nodeId)
