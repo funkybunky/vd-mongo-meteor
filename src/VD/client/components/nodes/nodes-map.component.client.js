@@ -75,12 +75,6 @@ export default class NodesMap extends Component {
       )
     } else {
       const { raster, nodes, links } = this.props
-      // console.log('keys: ', raster.keys())
-
-      // const testNode = this.props.nodes[2]
-      // console.log('checking node ', testNode.title)
-      // const border = this.getBorderPos(testNode._id, raster, this.props.nodes, this.props.links)
-      // console.log('border. ', border)
 
       const borders = this.getBorders(raster, nodes, links)
 
