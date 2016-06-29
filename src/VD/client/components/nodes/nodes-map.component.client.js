@@ -97,8 +97,6 @@ export default class NodesMap extends Component {
         })
       }
 
-      // debugger
-
       return (
         <div style={{position: 'relative'}}>
 
