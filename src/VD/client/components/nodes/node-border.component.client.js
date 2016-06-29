@@ -14,7 +14,15 @@ export default class NodeBorder extends React.Component {
         left: (start.x * 110) - 2,
         height: ((end.y + 1) * 50) - 12,
         width: (89),
-        border: 'solid 3px black'
+        border: 'solid 4px black',
+        backgroundColor: '#eee',
+        background: `repeating-linear-gradient(
+          45deg,
+          #606dbc,
+          #606dbc 10px,
+          #465298 10px,
+          #465298 20px
+        )`,      
       }}></div>
     )
   }
