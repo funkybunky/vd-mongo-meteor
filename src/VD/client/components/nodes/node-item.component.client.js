@@ -6,7 +6,7 @@ export default class NodeItem extends Component {
     currentNode: React.PropTypes.object.isRequired,
     x: React.PropTypes.number.isRequired,
     y: React.PropTypes.number.isRequired,
-    handleNewNode: React.PropTypes.function.isRequired,
+    handleNewNode: React.PropTypes.func.isRequired,
   }
   handleNodeClick = (event) => {
     event.preventDefault()
