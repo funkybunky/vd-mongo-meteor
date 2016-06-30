@@ -12,7 +12,7 @@ export default class NodeBorder extends React.Component {
         position: 'absolute',
         top: (start.y * 50) - 2,
         left: (start.x * 110) - 2,
-        height: ((end.y + 1) * 50) - 12,
+        height: ((end.y - start.y + 1) * 50) - 12,
         width: (89),
         border: 'solid 4px black',
         backgroundColor: '#eee',
@@ -22,7 +22,7 @@ export default class NodeBorder extends React.Component {
           #606dbc 10px,
           #465298 10px,
           #465298 20px
-        )`,      
+        )`,
       }}></div>
     )
   }
