@@ -106,5 +106,6 @@ export default function rasta (nodes, links, helpers, store) {
     getNodePos,
     getNodeById: getNodePos,
     checkChildrenShown,
+    helpers,
   }
 }

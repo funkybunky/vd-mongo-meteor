@@ -1,6 +1,8 @@
+/* @flow */
+
 import initRaster from './raster.utils.client.js'
 
-export default (nodes, links) => {
+export default (nodes: Array<Object>, links: Array<Object>): Object => {
   // console.log('da nodes: ', JSON.stringify(nodes, null, 2))
   // console.log('links: ', JSON.stringify(links, null, 2))
 
@@ -43,11 +45,7 @@ export default (nodes, links) => {
   }
 
   const getNodeName = (nodeId, nodes) => {
-    if (nodes.includes(nodeId)) {
-      return nodes.filter((node) => {
-        nodeId === node._id
-      })[0].title
-    }
+    return nodes.filter((node) => nodeId === node._id)[0].title
   }
 
   const helpers = {

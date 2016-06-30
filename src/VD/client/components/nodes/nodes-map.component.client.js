@@ -53,6 +53,8 @@ export default class NodesMap extends Component {
       { x: x, y: maxY }
     ]
 
+    console.log('children border pos: ', result, 'parent name: ', raster.helpers.getNodeName(parentId, nodes))
+
     return result
   }
 
