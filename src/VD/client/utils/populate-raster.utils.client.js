@@ -42,11 +42,20 @@ export default (nodes, links) => {
     return children
   }
 
+  const getNodeName = (nodeId, nodes) => {
+    if (nodes.includes(nodeId)) {
+      return nodes.filter((node) => {
+        nodeId === node._id
+      })[0].title
+    }
+  }
+
   const helpers = {
     findParent,
     findRoot,
     isRoot,
     findChildren,
+    getNodeName,
   }
   const raster = initRaster(nodes, links, helpers)
 
