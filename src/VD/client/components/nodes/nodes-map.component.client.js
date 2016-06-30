@@ -53,7 +53,7 @@ export default class NodesMap extends Component {
       { x: x, y: maxY }
     ]
 
-    console.log('children border pos: ', result, 'parent name: ', raster.helpers.getNodeName(parentId, nodes))
+    // console.log('children border pos: ', result, 'parent name: ', raster.helpers.getNodeName(parentId, nodes))
 
     return result
   }
@@ -98,10 +98,8 @@ export default class NodesMap extends Component {
       }
 
       const drawParentChildConnectors = () => {
-        // debugger
         return this.getFirstChildren(raster, nodes, links).map((childId) => {
           const pos = raster.getNodePos(childId)
-          console.log('pos: ', pos)
           if (pos) return <NodeConnector key={childId} x={pos.x} y={pos.y} />
         })
       }
