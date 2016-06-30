@@ -80,8 +80,7 @@ export default function rasta (nodes, links, helpers, store) {
   }
 
   function getNodePos(id) {
-    console.log('getting pos of node: ', id)
-    // debugger
+    // console.log('getting pos of node: ', id)
     if (id === 'zxHn2DCPAREEQ5x4c') console.log(JSON.stringify(store, null, 2))
     if (store[id].isShown === false) return false
     let pos = {}
