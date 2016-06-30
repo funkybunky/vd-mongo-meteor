@@ -26,6 +26,7 @@ export default class NodeItem extends Component {
           color: '#ddd',
           width: '90px',
           height: '40px',
+          border: '1px solid #333',
         }
         }
         onClick={this.handleNodeClick}
