@@ -5,11 +5,10 @@ import Links from 'VD/collections/Links.collection.both.js'
 
 import NodesMap from './nodes-map.component.client.js'
 
-import raster from 'VD/client/utils/raster.utils.client.js'
 import populateRaster from 'VD/client/utils/populate-raster.utils.client.js'
 
 export default createContainer((params) => {
-  console.log('params: ', params)
+  // console.log('params: ', params)
 
   const nodesHandle = Meteor.subscribe('allNodes', {
     onReady: (...squat) => {
@@ -33,7 +32,7 @@ export default createContainer((params) => {
 
   let populatedRaster
   if (!loading) {
-    populatedRaster = populateRaster(nodes, links, raster)
+    populatedRaster = populateRaster(nodes, links)
   }
 
   const handleNewNode = (payload) => {

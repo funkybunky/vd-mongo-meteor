@@ -1,6 +1,17 @@
-export default (nodes, links, raster) => {
+import initRaster from './raster.utils.client.js'
+
+export default (nodes, links) => {
   // console.log('da nodes: ', JSON.stringify(nodes, null, 2))
   // console.log('links: ', JSON.stringify(links, null, 2))
+
+  const findParent = (childId, nodes, links) => {
+    // nodes.reduce((node) => {})
+    const linksToParent = links.filter((link) => link.from === childId)
+    if (linksToParent.length === 0) throw new Error('No parent found!')
+    const parents = nodes.filter((node) => node._id === linksToParent[0].to)
+    if (parents.length === 0) throw new Error('No parent found!')
+    return parents[0]
+  }
 
   const findRoot = (nodes, links) => {
     // the root node is the one whose ID is in no link `from` field
@@ -18,6 +29,10 @@ export default (nodes, links, raster) => {
     return rootId
   }
 
+  const isRoot = (nodeId, nodes, links) => {
+    return nodeId === findRoot(nodes, links)
+  }
+
   // Returns children IDs
   const findChildren = (parentId, links) => {
     let children = []
@@ -26,6 +41,15 @@ export default (nodes, links, raster) => {
     })
     return children
   }
+
+  const helpers = {
+    findParent,
+    findRoot,
+    isRoot,
+    findChildren,
+  }
+  const raster = initRaster(nodes, links, helpers)
+
 
   // Places an array of children IDs in the raster
   // returns the last y-position

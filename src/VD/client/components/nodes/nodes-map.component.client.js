@@ -1,5 +1,3 @@
-'use strict'
-
 import React, { Component } from 'react'
 import _ from 'lodash' // not found by flow, because node_modules is ignored
 /* @flow */
@@ -26,16 +24,17 @@ export default class NodesMap extends Component {
     return childrenIds
   }
   getBorderPos (parentId: String, raster: Object, nodes: Array<Node>, links: Array<Link>): MinMaxPos {
+    if (raster.checkChildrenShown(parentId) === false) return false
     const childrenIds = this.getChildrenIds(parentId, nodes, links)
     if (childrenIds.length === 0) {
-      console.log('no children')
+      // console.log('no children')
       return false
     }
     const positions = childrenIds.map((id) => {
       return raster.getNodeById(id)
     })
     // is array of objects with props x, y
-    console.log('positions: ', positions)
+    // console.log('positions: ', positions)
     // sort the objects
     // they should have the same x, if not throw here
     // just sort for y down
@@ -65,6 +64,7 @@ export default class NodesMap extends Component {
 
   getFirstChildren (raster: Object, nodes: Array<Object>, links: Array<Object>): Array<String> {
     return _.compact(nodes.map((node) => {
+      if (raster.checkChildrenShown(node._id) === false) return false
       const childrenIds = this.getChildrenIds(node._id, nodes, links)
       if (childrenIds.length > 0) {
         return childrenIds[0]
@@ -96,11 +96,11 @@ export default class NodesMap extends Component {
       }
 
       const drawParentChildConnectors = () => {
-        // const bla = this.getFirstChildren()
         // debugger
         return this.getFirstChildren(raster, nodes, links).map((childId) => {
           const pos = raster.getNodePos(childId)
-          return <NodeConnector key={childId} x={pos.x} y={pos.y} />
+          console.log('pos: ', pos)
+          if (pos) return <NodeConnector key={childId} x={pos.x} y={pos.y} />
         })
       }
       // const firstChildren = this.getFirstChildren(raster, nodes, links)
