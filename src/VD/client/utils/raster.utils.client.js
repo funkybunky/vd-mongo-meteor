@@ -46,6 +46,26 @@ export default function rasta (nodes, links, helpers, store) {
       const parent = helpers.findParent(id, nodes, links)
       store[parent._id].showChildren = false
       // debugger
+      // If there is already a node, we check that node's parent:
+
+      // Does it havet eh showChildren flag set? If it is set, we hide the
+      // current node and also mkae the currentNode's parent showChildren =
+      // false. This is our current behaviour.
+
+      // TODO: But if the flag of the other parent is not set at all, but our
+      // node says true, then go to the .. no .. then set the other node's
+      // parent flag to false and re-run this rasta func
+
+      // What if our node says show but also the other node says true? conflict!
+
+      // Need a notion of currentAction. This should win everytime. Like when
+      // there is a conflict.
+
+      // TODO: Hm, no I need a log of actions. that's way better. The newer the
+      // action the higher its value.
+
+      // TODO: IF there are two conflicting information, look at the action log
+      // and decide from there.
       return rasta(nodes, links, helpers, store)
     } else {
       posToId[serialize(x, y)] = id
