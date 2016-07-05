@@ -73,8 +73,6 @@ export default function rasta (nodes, links, helpers, store) {
       return true
     }
   }
-  // TODO: add check in set() to see if there's already a node at this pos
-  // add another func or a param flag to force a write anyway
 
   // Just outputs all node positions in an array
   function keys() {
