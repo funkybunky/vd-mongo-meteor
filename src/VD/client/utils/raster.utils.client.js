@@ -13,6 +13,7 @@ export default function rasta (nodes, links, helpers, store) {
     nodes.forEach((node) => {
       // If there are values stored from the previous iteration, use those
       store[node._id] = store[node._id] || {}
+      // store[node._id].showChildren = store[node._id].showChildren || true
     })
   }
   init(nodes)
@@ -94,6 +95,7 @@ export default function rasta (nodes, links, helpers, store) {
   }
 
   function checkChildrenShown(parentId) {
+    console.log('store: ', store[parentId])
     return store[parentId].showChildren
   }
 

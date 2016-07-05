@@ -7,6 +7,7 @@ export default class NodeItem extends Component {
     x: React.PropTypes.number.isRequired,
     y: React.PropTypes.number.isRequired,
     handleNewNode: React.PropTypes.func.isRequired,
+    hasChildrenShown: React.PropTypes.bool,
   }
   handleNodeClick = (event) => {
     event.preventDefault()
@@ -38,6 +39,7 @@ export default class NodeItem extends Component {
         onClick={this.handleNodeClick}
       >
         <span>{this.props.currentNode.title}</span>
+        <span>{this.props.hasChildrenShown ? 'X' : 'Y'}</span>
       </div>
     )
   }

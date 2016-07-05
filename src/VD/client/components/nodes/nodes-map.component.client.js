@@ -33,6 +33,7 @@ export default class NodesMap extends Component {
     const positions = childrenIds.map((id) => {
       return raster.getNodeById(id)
     })
+
     // is array of objects with props x, y
     // console.log('positions: ', positions)
     // sort the objects
@@ -120,6 +121,7 @@ export default class NodesMap extends Component {
               currentNode={node}
               x={position.x}
               y={position.y}
+              hasChildrenShown={raster.checkChildrenShown(nodeId)}
               //isFirstChild={firstChildren.includes(nodeId)}
               handleNewNode={this.props.handleNewNode} />
           })}
