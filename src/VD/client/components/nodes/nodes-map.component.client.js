@@ -122,6 +122,7 @@ export default class NodesMap extends Component {
               x={position.x}
               y={position.y}
               hasChildrenShown={raster.checkChildrenShown(nodeId)}
+              handleToggleShowChildren={this.props.handleToggleShowChildren}
               //isFirstChild={firstChildren.includes(nodeId)}
               handleNewNode={this.props.handleNewNode} />
           })}

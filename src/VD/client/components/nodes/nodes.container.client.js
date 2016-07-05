@@ -7,6 +7,11 @@ import NodesMap from './nodes-map.component.client.js'
 
 import populateRaster from 'VD/client/utils/populate-raster.utils.client.js'
 
+/* @flow */
+
+let actions = [] // a log of user actions that manipulate local state
+// TODO: prolly store it in browser storage
+
 export default createContainer((params) => {
   // console.log('params: ', params)
 
@@ -54,11 +59,25 @@ export default createContainer((params) => {
     // }
   }
 
+  const handleToggleShowChildren = (nodeId: String) => {
+    check(nodeId, String)
+    const action = {
+      type: 'TOGGLE_SHOW_CHILDREN',
+      payload: {
+        id: nodeId
+      }
+    }
+    console.log('past actions: ', actions)
+    actions.push(action)
+    populatedRaster = populateRaster(nodes, links, actions)
+  }
+
   return {
     loading,
     raster: populatedRaster,
     nodes,
     links,
     handleNewNode,
+    handleToggleShowChildren,
   }
 }, NodesMap)

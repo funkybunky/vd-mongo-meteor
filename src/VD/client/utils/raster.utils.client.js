@@ -113,7 +113,7 @@ export default function rasta (nodes, links, helpers, store) {
   }
 
   function checkChildrenShown(parentId) {
-    console.log('store: ', store[parentId])
+    // console.log('store: ', store[parentId])
     return store[parentId].showChildren
   }
 

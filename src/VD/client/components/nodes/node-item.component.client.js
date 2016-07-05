@@ -9,6 +9,7 @@ export default class NodeItem extends Component {
     handleNewNode: React.PropTypes.func.isRequired,
     hasChildrenShown: React.PropTypes.bool,
   }
+
   handleNodeClick = (event) => {
     event.preventDefault()
     const payload = {
@@ -19,6 +20,13 @@ export default class NodeItem extends Component {
     }
     this.props.handleNewNode(payload)
   }
+
+  handleShowChildrenClick = (event) => {
+    event.preventDefault()
+    event.stopPropagation() // event should not trigger complete node click
+    this.props.handleToggleShowChildren(this.props.currentNode._id)
+  }
+
   render () {
     // console.log('props to NodeItem: ',)
     return (
@@ -39,7 +47,7 @@ export default class NodeItem extends Component {
         onClick={this.handleNodeClick}
       >
         <span>{this.props.currentNode.title}</span>
-        <span>{this.props.hasChildrenShown ? 'X' : 'Y'}</span>
+        <span onClick={this.handleShowChildrenClick}>{this.props.hasChildrenShown ? 'X' : 'Y'}</span>
       </div>
     )
   }
