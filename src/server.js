@@ -2,8 +2,8 @@ import { Meteor } from 'meteor/meteor';
 
 import 'VD/server/index.js'
 
-import Nodes from 'VD/collections/Nodes.collection.both.js'
-import Links from 'VD/collections/Links.collection.both.js'
+import Nodes from 'VD/collections/nodes.collection.both.js'
+import Links from 'VD/collections/links.collection.both.js'
 
 Meteor.startup(() => {
   // code to run on server at startup

@@ -1,7 +1,7 @@
 import { createContainer } from 'meteor/react-meteor-data'
 
-import Nodes from 'VD/collections/Nodes.collection.both.js'
-import Links from 'VD/collections/Links.collection.both.js'
+import Nodes from 'VD/collections/nodes.collection.both.js'
+import Links from 'VD/collections/links.collection.both.js'
 
 import NodesMap from './nodes-map.component.client.js'
 

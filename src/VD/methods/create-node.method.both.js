@@ -1,5 +1,5 @@
-import Nodes from '../collections/Nodes.collection.both.js'
-import Links from '../collections/Links.collection.both.js'
+import Nodes from '../collections/nodes.collection.both.js'
+import Links from '../collections/links.collection.both.js'
 
 Meteor.methods({
   createNode: function(payload) {
