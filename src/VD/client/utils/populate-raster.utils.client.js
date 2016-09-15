@@ -2,7 +2,11 @@
 
 import initRaster from './raster.utils.client.js'
 
-export default (nodes: Array<Object>, links: Array<Object>, actions: Array<Object>, action: Object): Object => {
+export default (
+  nodes: Array<Object>,
+  links: Array<Object>,
+  actions: Array<Object>,
+  action: Object): Object => {
   // console.log('da nodes: ', JSON.stringify(nodes, null, 2))
   // console.log('links: ', JSON.stringify(links, null, 2))
 
