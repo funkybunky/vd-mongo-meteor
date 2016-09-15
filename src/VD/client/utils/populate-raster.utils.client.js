@@ -2,7 +2,7 @@
 
 import initRaster from './raster.utils.client.js'
 
-export default (nodes: Array<Object>, links: Array<Object>): Object => {
+export default (nodes: Array<Object>, links: Array<Object>, actions: Array<Object>, action: Object): Object => {
   // console.log('da nodes: ', JSON.stringify(nodes, null, 2))
   // console.log('links: ', JSON.stringify(links, null, 2))
 
@@ -57,10 +57,19 @@ export default (nodes: Array<Object>, links: Array<Object>): Object => {
   }
   const raster = initRaster(nodes, links, helpers)
 
+  // Perform actions here, before placing the children
+  if (action) {
+    if (action.type === 'TOGGLE_SHOW_CHILDREN') {
+      // TODO: Find a better pattern matching algorithm
+      // initRaster(nodes, links, helpers, )
+    }
+  }
 
   // Places an array of children IDs in the raster
   // returns the last y-position
   // TODO: make this function pure by passing in the raster and returning it
+  // TODO: I have double logic: in this func and in the raster.set() func.
+  // The logic should be either here (preferred) or in the raster, but not in both
   const placeChildren = (parentId, childrenIds) => {
     const parentPos = raster.getNodePos(parentId)
     // console.log('parentPos: ', parentPos)

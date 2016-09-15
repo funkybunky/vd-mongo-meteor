@@ -69,7 +69,7 @@ export default createContainer((params) => {
     }
     console.log('past actions: ', actions)
     actions.push(action)
-    populatedRaster = populateRaster(nodes, links, actions)
+    populatedRaster = populateRaster(nodes, links, actions, action)
   }
 
   return {
